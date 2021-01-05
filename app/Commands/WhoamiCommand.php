@@ -19,18 +19,19 @@ class WhoamiCommand extends Command
 
     /**
      * @inheritdoc
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function handle($arguments)
+    public function handle()
     {
         $msg = $this->getUpdate()->getMessage();
 
-        $userid = $msg->getFrom()->getId();
+        $userid = $msg->from->id;
 
-        $username = $msg->getFrom()->getUsername();
+        $username = $msg->from->username;
 
-        $first_name = $msg->getFrom()->getFirstName();
+        $first_name = $msg->from->firstName;
 
-        $chatid = $msg->getChat()->getId();
+        $chatid = $msg->chat->id;
 
         $this->replyWithChatAction(['action' => Actions::TYPING]);
         $this->replyWithMessage([
@@ -38,7 +39,7 @@ class WhoamiCommand extends Command
                 '您所設定的 username 為 @' . $username . PHP_EOL .
                 '您的 Telegram user ID 為 ' . $userid . PHP_EOL .
                 '目前所在的頻道 ID 為 ' . $chatid,
-            'reply_to_message_id' => $msg->getMessageId()
+            'reply_to_message_id' => $msg->messageId
         ]);
 
         return response('OK', 200);

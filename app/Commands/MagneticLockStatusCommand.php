@@ -23,8 +23,10 @@ class MagneticLockStatusCommand extends Command
 
     /**
      * @inheritdoc
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle($arguments)
+    public function handle()
     {
         $client = new GuzzleHttpClient();
 
@@ -62,7 +64,7 @@ class MagneticLockStatusCommand extends Command
         if ( $chatType === 'private' ) {
             $client = new GuzzleHttpClient([
                 'headers' => [
-                    'User-Agent'      => 'MOLi Bot',
+                    'User-Agent'      => 'MOLiBot',
                     'Accept-Encoding' => 'gzip',
                     'cache-control'   => 'no-cache'
                 ],

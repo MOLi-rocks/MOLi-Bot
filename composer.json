@@ -15,7 +15,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "fukuball/jieba-php": "dev-master",
         "guzzlehttp/guzzle": "^6.2",
-        "irazasyed/telegram-bot-sdk": "3.0.x-dev",
+        "irazasyed/telegram-bot-sdk": "^3.3.0",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0"
     },

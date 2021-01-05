@@ -24,19 +24,22 @@ class HydraDVRRemoteControlCommand extends Command
      * @var string Command Description
      */
     protected $description = 'MOLi DVR 遙控器';
-    
+
     /**
      * @inheritdoc
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Throwable
      */
-    public function handle($arguments)
+    public function handle()
     {
         $message = $this->getUpdate()->getMessage();
-        $chatType = $message->getChat()->getType();
-        $messageId = $message->getMessageId();
-        $messageFromId = $message->getFrom()->getId();
+        $chatType = $message->chat->type;
+        $messageId = $message->messageId;
+        $messageFromId = $message->from->id;
+        $argument = $this->arguments[0];
 
         if ( $chatType === 'private' ) {
-            if (empty($arguments)) {
+            if (empty($argument)) {
                 $keyboard = TelegramKeyboard::make([
                     ['Up'],
                     ['Left', 'Right'],
@@ -76,9 +79,9 @@ class HydraDVRRemoteControlCommand extends Command
             }
             */
 
-            switch ($arguments) {
+            switch ($argument) {
                 case 'ESC':
-                    $keyboard = TelegramKeyboard::hide();
+                    $keyboard = TelegramKeyboard::remove();
 
                     $this->replyWithChatAction(['action' => Actions::TYPING]);
                     $this->replyWithMessage([
@@ -144,7 +147,7 @@ class HydraDVRRemoteControlCommand extends Command
 
             $client->request('GET', config('moli.dvr.control_url') . $position, [
                 'headers' => [
-                    'User-Agent'      => 'MOLi Bot',
+                    'User-Agent'      => 'MOLiBot',
                     'Accept'          => 'application/json',
                     'Accept-Encoding' => 'gzip',
                     'cache-control'   => 'no-cache'
@@ -155,7 +158,7 @@ class HydraDVRRemoteControlCommand extends Command
             if ($position != 'door') {
                 $response = $client->request('GET', config('moli.dvr.snapshot_url'), [
                     'headers' => [
-                        'User-Agent'      => 'MOLi Bot',
+                        'User-Agent'      => 'MOLiBot',
                         'Accept'          => 'application/json',
                         'Accept-Encoding' => 'gzip',
                         'cache-control'   => 'no-cache'
@@ -173,7 +176,7 @@ class HydraDVRRemoteControlCommand extends Command
                     Storage::disk('local')->put($fileName . '.' . $type[1], $response->getBody());
 
                     $this->replyWithPhoto([
-                        'reply_to_message_id' => $this->getUpdate()->getMessage()->getMessageId(),
+                        'reply_to_message_id' => $this->getUpdate()->getMessage()->messageId,
                         'photo' => $imgpath . $fileName . '.' . $type[1],
                     ]);
 

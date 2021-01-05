@@ -22,8 +22,9 @@ class FuckCommand extends Command
 
     /**
      * @inheritdoc
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function handle($arguments)
+    public function handle()
     {
         /*
         $baseUrl = 'https://nmsl.shadiao.app/';
@@ -34,7 +35,7 @@ class FuckCommand extends Command
             $response = $client->request('GET', $baseUrl, [
                 'verify' => false,
                 'headers' => [
-                    'User-Agent' => 'MOLi Bot'
+                    'User-Agent' => 'MOLiBot'
                 ],
                 'timeout' => 20
             ]);

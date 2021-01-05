@@ -111,7 +111,7 @@ class TelegramController extends Controller
             //Ex: hydra DVR
             $client = new GuzzleHttpClient([
                 'headers' => [
-                    'User-Agent'      => 'MOLi Bot',
+                    'User-Agent'      => 'MOLiBot',
                     'Accept-Encoding' => 'gzip',
                     'cache-control'   => 'no-cache'
                 ],
@@ -186,7 +186,7 @@ class TelegramController extends Controller
                 return response('No Message', 200);
             }
 
-            $chatType = $message->getChat()->getType();
+            $chatType = $message->chat->type;
 
             if ($message->has('new_chat_member')) {
                 $this->telegramService->sendWelcomeMsg($message);

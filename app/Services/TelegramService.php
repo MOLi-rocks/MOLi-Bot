@@ -91,8 +91,8 @@ class TelegramService
         $status = false;
 
         try {
-            $chatId = $hook->getChat()->getId();
-            $memberIsBot = $hook->getNewChatMember()->getIsBot();
+            $chatId = $hook->chat->id;
+            $memberIsBot = $hook->newChatMembers[0]->isBot;
 
             if (strval($chatId) === strval($this->MOLiGroupId) && !$memberIsBot) {
                 $welcomeMsg = $this->sendMessage(
@@ -101,11 +101,11 @@ class TelegramService
                     null,
                     true,
                     false,
-                    $hook->getMessageId()
+                    $hook->messageId
                 );
 
-                $newChatMemberId = $hook->getNewChatMember()->getId();
-                $welcomeMsgId = $welcomeMsg->getMessageId();
+                $newChatMemberId = $hook->newChatMembers[0]->id;
+                $welcomeMsgId = $welcomeMsg->messageId;
 
                 $joinTimestamp = time();
                 $checked = false;
@@ -136,18 +136,18 @@ class TelegramService
 
         try {
             $message = $update->getMessage();
-            $userId = $message->getFrom()->getId();
+            $userId = $message->from->id;
             $cmdInUse = $this->whoUseWhatCommandRepository->getCommand($userId);
 
             if (!empty($cmdInUse)) {
                 $command = $cmdInUse->command;
                 $arguments = '';
 
-                if ($message->getText() != '/' . $command) {
-                    $arguments =$message->getText();
+                if ($message->text != '/' . $command) {
+                    $arguments = $message->text;
                 }
 
-                $this->telegram->getCommandBus()->execute($command, $arguments, $update);
+                $this->telegram->triggerCommand($command, $update, $arguments);
             }
 
             $status = true;

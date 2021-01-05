@@ -19,8 +19,9 @@ class MapCommand extends Command
 
     /**
      * @inheritdoc
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function handle($arguments)
+    public function handle()
     {
         $this->replyWithChatAction(['action' => Actions::FIND_LOCATION]);
 

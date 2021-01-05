@@ -24,17 +24,20 @@ class SearchStaffContactCommand extends Command
 
     /**
      * @inheritdoc
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Throwable
      */
-    public function handle($arguments)
+    public function handle()
     {
-        $update = $this->getUpdate();
+        $update = $this->getUpdate()->getMessage();
 
-        $chatType = $update->getMessage()->getChat()->getType();
-        $messageFrom = $update->getMessage()->getFrom()->getId();
-        $messageId = $update->getMessage()->getMessageId();
+        $chatType = $update->chat->type;
+        $messageFrom = $update->from->id;
+        $messageId = $update->messageId;
+        $argument = $this->arguments[0];
 
         if ( $chatType === 'private' ) {
-            if (empty($arguments)) {
+            if (empty($argument)) {
                 $this->replyWithChatAction(['action' => Actions::TYPING]);
                 $this->replyWithMessage([
                     'text' => '請回覆想查詢的關鍵字(不支援多條件搜尋)',
@@ -55,7 +58,7 @@ class SearchStaffContactCommand extends Command
 
             $ncnuService = app('MOLiBot\Services\NcnuService');
 
-            $json = $ncnuService->getStaffContact($arguments);
+            $json = $ncnuService->getStaffContact($argument);
 
             $text = '';
 

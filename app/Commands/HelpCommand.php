@@ -18,7 +18,7 @@ class HelpCommand extends Command
     /**
      * @var array Command Aliases
      */
-    protected $aliases = ['list-commands'];
+    // protected $aliases = ['help-command'];
 
     /**
      * @var string Command Description
@@ -26,9 +26,10 @@ class HelpCommand extends Command
     protected $description = '列出可用指令';
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function handle($arguments)
+    public function handle()
     {
         $text = $this->helptext();
 

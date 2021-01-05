@@ -22,8 +22,9 @@ class StartCommand extends Command
 
     /**
      * @inheritdoc
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function handle($arguments)
+    public function handle()
     {
         $this->replyWithChatAction(['action' => Actions::TYPING]);
         // This will send a message using `sendMessage` method behind the scenes to

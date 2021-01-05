@@ -15,7 +15,7 @@ abstract class Source implements SourceInterface
     {
         $this->httpClient = new GuzzleHttpClient([
             'headers' => [
-                'User-Agent'      => 'MOLi Bot',
+                'User-Agent'      => 'MOLiBot',
                 'Accept-Encoding' => 'gzip',
                 'Accept'          => 'application/json',
                 'cache-control'   => 'no-cache'

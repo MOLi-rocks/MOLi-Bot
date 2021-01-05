@@ -19,11 +19,10 @@ class StopWorkingInfoCommand extends Command
 
     /**
      * @inheritdoc
-     * @param $arguments
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle($arguments)
+    public function handle()
     {
         $ncdrService = app('MOLiBot\Services\NcdrService');
 

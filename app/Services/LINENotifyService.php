@@ -192,7 +192,7 @@ class LINENotifyService
 
             $response = $client->request('POST', 'https://notify-bot.line.me/oauth/token', [
                 'headers'     => [
-                    'User-Agent'    => 'MOLi Bot',
+                    'User-Agent'    => 'MOLiBot',
                     'cache-control' => 'no-cache'
                 ],
                 'form_params' => [

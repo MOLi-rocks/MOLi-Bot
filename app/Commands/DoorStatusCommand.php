@@ -25,8 +25,10 @@ class DoorStatusCommand extends Command
 
     /**
      * @inheritdoc
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle($arguments)
+    public function handle()
     {
         try {
             $data = new MoliDoorStatus();
@@ -48,7 +50,7 @@ class DoorStatusCommand extends Command
                     $reply = '門鎖狀態不明，猴子們正努力維修中！';
             }
 
-            $chatType = $this->getUpdate()->getMessage()->getChat()->getType();
+            $chatType = $this->getUpdate()->getMessage()->chat->type;
 
             $this->replyWithChatAction(['action' => Actions::TYPING]);
             $send = $this->replyWithMessage(['text' => $reply]);
@@ -56,7 +58,7 @@ class DoorStatusCommand extends Command
             if ($chatType === 'private') {
                 $client = new GuzzleHttpClient([
                     'headers' => [
-                        'User-Agent'      => 'MOLi Bot',
+                        'User-Agent'      => 'MOLiBot',
                         'Accept-Encoding' => 'gzip',
                         'cache-control'   => 'no-cache'
                     ],

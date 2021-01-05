@@ -22,8 +22,10 @@ class ActivityCommand extends Command
 
     /**
      * @inheritdoc
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function handle($arguments)
+    public function handle()
     {
         $kktix = new MoliKktix();
 
